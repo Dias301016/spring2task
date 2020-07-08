@@ -1,0 +1,124 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main_no_sidebar.html">
+<div layout:fragment="myContent" >
+    <div class="row">
+        <div class="col-sm-8">
+            <form action="/editStudents" method="post" class="form">
+                <div class="form-group">
+                    <label>
+                        NAME :
+                    </label>
+                    <input type="text" name="name" th:value="${students.name}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        SURNAME :
+                    </label>
+                    <input type="text" name="surname" th:value="${students.surname}"class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        ADDMISSION YEAR :
+                    </label>
+                    <input type="number" name="addmission" min="2017" th:value="${students.yearOfAddmission}" class="form-control">
+                </div>
+                <input type="hidden" name="id" th:value="${students.id}">
+                <button class="btn btn-success">SAVE</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <form action="/addCoursesForStudent" method="post">
+            <select name="courses_id">
+                <option th:each = "i : ${courses}" th:value="${i.id}" th:text="${i.name}">
+                </option>
+            </select>
+            <input type="hidden" th:value="${students.id}" name="id">
+            <button>Add Course</button>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="20" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        NAME
+                    </th>
+                    <th>
+                        CREDITS
+                    </th>
+                    <th>
+                        EDIT
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "i : ${course}">
+                    <td th:text = "${i.id}"></td>
+                    <td th:text = "${i.name}"></td>
+                    <td th:text = "${i.credits}"></td>
+                    <td>
+                        <form action="/removeCourses" method="post">
+                            <input type="hidden" th:value="${i.id}" name="courses_id">
+                            <input type="hidden" th:value="${students.id}" name="id">
+                            <button class="btn btn-success">remove</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <form action="/addGroupsForStudent" method="post">
+            <select name="groups_id">
+                <option th:each = "i : ${groups}" th:value="${i.id}" th:text="${i.shortName}">
+                </option>
+            </select>
+            <input type="hidden" th:value="${students.id}" name="id">
+            <button>Add Group</button>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="20" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        NAME
+                    </th>
+                    <th>
+                        SHORT-NAME
+                    </th>
+                    <th>
+                        DETAILS
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "i : ${group}">
+                    <td th:text = "${i.id}"></td>
+                    <td th:text = "${i.name}"></td>
+                    <td th:text = "${i.shortName}"></td>
+                    <td>
+                        <form action="/removeGroups" method="post">
+                            <input type="hidden" th:value="${i.id}" name="groups_id">
+                            <input type="hidden" th:value="${students.id}" name="id">
+                            <button class="btn btn-success">remove</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main_no_sidebar.html">
+<div layout:fragment="myContent" >
+    <div class="row">
+        <div class="col-sm-8">
+            <form action="/addGroups" method="post" class="form">
+                <div class="form-group">
+                    <label>
+                        NAME :
+                    </label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        SHORT-NAME :
+                    </label>
+                    <input type="text" name="shortName" class="form-control">
+                </div>
+                <button class="btn btn-success">ADD</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table cellpadding="20" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        NAME
+                    </th>
+                    <th>
+                        SHORT-NAME
+                    </th>
+                    <th>
+                        DETAILS
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each = "i : ${groups}">
+                    <td th:text = "${i.id}"></td>
+                    <td th:text = "${i.name}"></td>
+                    <td th:text = "${i.shortName}"></td>
+                    <td>
+                        <a th:href = "@{'/details/'+${i.id}}">details</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>
